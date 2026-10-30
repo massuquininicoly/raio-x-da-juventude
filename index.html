@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raio-X da Juventude | Dashboard Social</title>
+    <!-- Importando o Chart.js para desenhar os gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --bg-color: #f8fafc;
+            --text-color: #334155;
+            --card-bg: #ffffff;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+        
+        header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 3rem 1rem; text-align: center; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        
+        .card { background-color: var(--card-bg); border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .card h2 { color: var(--primary-color); border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+        
+        .chart-container { position: relative; height: 350px; width: 100%; margin: 2rem 0; }
+        
+        .proposals { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .proposal-item { background: #f8fafc; border-left: 4px solid var(--primary-color); padding: 1.5rem; border-radius: 0 8px 8px 0; }
+        .proposal-item h3 { margin-bottom: 0.5rem; color: var(--secondary-color); }
+        
+        footer { text-align: center; padding: 2rem; color: #64748b; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎯 Raio-X da Juventude</h1>
+        <p>Análise de Condições de Vida e Métricas para Atuação Social e Educacional</p>
+    </header>
+
+    <div class="container">
+        <section class="card">
+            <h2>Metodologia e Objetivo</h2>
+            <p>O projeto diagnostica as condições socioeconômicas e educacionais de jovens da comunidade. Os dados foram coletados via formulários estruturados e analisados para gerar insights acionáveis voltados à melhoria do ensino e do bem-estar juvenil.</p>
+        </section>
+
+        <section class="card">
+            <h2>Resultados e Desigualdades Encontradas</h2>
+            <p>Abaixo estão os principais achados representados graficamente a partir da nossa base de dados:</p>
+            
+            <!-- Contêiner do Gráfico 1 -->
+            <div class="chart-container">
+                <canvas id="graficoInternet"></canvas>
+            </div>
+            
+            <!-- Contêiner do Gráfico 2 -->
+            <div class="chart-container">
+                <canvas id="graficoSaudeMental"></canvas>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>💡 Propostas de Intervenção</h2>
+            <div class="proposals">
+                <div class="proposal-item">
+                    <h3>1. Inclusão Digital</h3>
+                    <p>Criação e ampliação de polos comunitários de estudos com acesso gratuito à internet de alta velocidade e equipamentos para jovens de baixa renda.</p>
+                </div>
+                <div class="proposal-item">
+                    <h3>2. Apoio Socioemocional</h3>
+                    <p>Implementação de programas de mentoria estudantil e acompanhamento psicossocial nas escolas públicas para reduzir a evasão escolar.</p>
+                </div>
+                <div class="proposal-item">
+                    <h3>3. Adequação do Ensino</h3>
+                    <p>Oferta de cursos de capacitação técnica básica (programação, análise de dados e habilidades digitais) focados na inserção no mercado de trabalho.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Desenvolvido para o Projeto Raio-X da Juventude | Hospedado no GitHub Pages</p>
+    </footer>
+
+    <!-- Lógica em JavaScript para gerar os gráficos -->
+    <script>
+        // Gráfico 1: Acesso à Internet por Renda
+        const ctxInternet = document.getElementById('graficoInternet').getContext('2d');
+        new Chart(ctxInternet, {
+            type: 'bar',
+            data: {
+                labels: ['Até 1 SM', '1 a 3 SM', 'Mais de 3 SM'],
+                datasets: [
+                    {
+                        label: 'Banda Larga',
+                        data: [15, 45, 80], // Dados simulados
+                        backgroundColor: '#2563eb'
+                    },
+                    {
+                        label: 'Apenas Celular',
+                        data: [70, 40, 15],
+                        backgroundColor: '#60a5fa'
+                    },
+                    {
+                        label: 'Sem Acesso',
+                        data: [15, 5, 0],
+                        backgroundColor: '#94a3b8'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: 'Acesso à Internet por Faixa de Renda', font: { size: 16 } }
+                }
+            }
+        });
+
+        // Gráfico 2: Saúde Mental vs. Perspectiva de Futuro
+        const ctxSaude = document.getElementById('graficoSaudeMental').getContext('2d');
+        new Chart(ctxSaude, {
+            type: 'bar',
+            data: {
+                labels: ['Pessimista', 'Neutra', 'Otimista'],
+                datasets: [{
+                    label: 'Média de Saúde Mental (1 a 5)',
+                    data: [2.1, 3.2, 4.5], // Dados simulados
+                    backgroundColor: ['#f87171', '#fbbf24', '#34d399'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: 'Saúde Mental vs. Perspectiva de Futuro', font: { size: 16 } },
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 5 }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
